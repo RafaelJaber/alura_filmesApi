@@ -11,9 +11,9 @@ namespace FilmesApi.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Movie> GetMovies()
+        public IEnumerable<Movie> GetMovies([FromQuery] int skip = 0, [FromQuery] int take = 15)
         {
-            return Movies;
+            return Movies.Skip(skip).Take(take);
         }
 
         [HttpGet("{uid:guid}")]
