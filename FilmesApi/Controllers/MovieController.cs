@@ -17,17 +17,18 @@ namespace FilmesApi.Controllers
         }
 
         [HttpGet("{uid:guid}")]
-        public Movie? GetMovie(Guid uid)
+        public IActionResult GetMovie(Guid uid)
         {
-            return Movies.FirstOrDefault(movie => movie.Id == uid);
+            Movie movie = Movies.FirstOrDefault(movie => movie.Id == uid);
+            if (movie == null) return NotFound();
+            return Ok(movie);
         }
         
         [HttpPost]
-        public void AddMovie([FromBody] Movie movie)
+        public IActionResult AddMovie([FromBody] Movie movie)
         {
             Movies.Add(movie);
-            Console.WriteLine(movie.Title);
-            Console.WriteLine(movie.Id);
+            return CreatedAtAction(nameof(GetMovie), new { uid = movie.Id }, movie);
         }
     }
 }
