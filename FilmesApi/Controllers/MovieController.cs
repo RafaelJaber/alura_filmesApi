@@ -19,11 +19,11 @@ namespace FilmesApi.Controllers
         [HttpGet("{uid:guid}")]
         public IActionResult GetMovie(Guid uid)
         {
-            Movie movie = Movies.FirstOrDefault(movie => movie.Id == uid);
+            Movie movie = Movies.FirstOrDefault(movie => movie.Id == uid)!;
             if (movie == null) return NotFound();
             return Ok(movie);
         }
-        
+
         [HttpPost]
         public IActionResult AddMovie([FromBody] Movie movie)
         {
