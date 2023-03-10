@@ -42,5 +42,16 @@ namespace FilmesApi.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetMovie), new { uid = movie.Id }, movie);
         }
+
+        [HttpPut("{uid:guid}")]
+        public IActionResult UpdateMovie(Guid uid, [FromBody] UpdateMovieDto movieDto)
+        {
+            Movie movie = _context.Movies.FirstOrDefault(
+                movie => movie.Id == uid)!;
+            if (movie == null) return NotFound();
+            _mapper.Map(movieDto, movie);
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
 }
