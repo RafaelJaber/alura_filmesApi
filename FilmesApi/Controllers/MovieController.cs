@@ -2,6 +2,7 @@ using AutoMapper;
 using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesApi.Controllers
@@ -50,6 +51,23 @@ namespace FilmesApi.Controllers
                 movie => movie.Id == uid)!;
             if (movie == null) return NotFound();
             _mapper.Map(movieDto, movie);
+            _context.SaveChanges();
+            return NoContent();
+        }
+        
+        [HttpPatch("{uid:guid}")]
+        public IActionResult UpdateMoviePatch(Guid uid, JsonPatchDocument<UpdateMovieDto> patch)
+        {
+            Movie movie = _context.Movies.FirstOrDefault(
+                movie => movie.Id == uid)!;
+            if (movie == null) return NotFound();
+
+            UpdateMovieDto? movieToUpdate = _mapper.Map<UpdateMovieDto>(movie);
+            patch.ApplyTo(movieToUpdate, ModelState);
+
+            if (!TryValidateModel(movieToUpdate)) return ValidationProblem(ModelState);
+            
+            _mapper.Map(movieToUpdate, movie);
             _context.SaveChanges();
             return NoContent();
         }
