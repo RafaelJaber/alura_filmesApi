@@ -1,3 +1,6 @@
+using AutoMapper;
+using FilmesApi.Data;
+using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,27 +10,36 @@ namespace FilmesApi.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
-        private static readonly List<Movie> Movies = new List<Movie>();
+        private readonly MovieContext _context;
+        private readonly IMapper _mapper;
 
+        public MovieController(MovieContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
+        
         [HttpGet]
         public IEnumerable<Movie> GetMovies([FromQuery] int skip = 0, [FromQuery] int take = 15)
         {
-            return Movies.Skip(skip).Take(take);
+            return _context.Movies.Skip(skip).Take(take);
         }
 
         [HttpGet("{uid:guid}")]
         public IActionResult GetMovie(Guid uid)
         {
-            Movie movie = Movies.FirstOrDefault(movie => movie.Id == uid)!;
+            Movie movie = _context.Movies.FirstOrDefault(movie => movie.Id == uid)!;
             if (movie == null) return NotFound();
             return Ok(movie);
         }
 
         [HttpPost]
-        public IActionResult AddMovie([FromBody] Movie movie)
+        public IActionResult AddMovie([FromBody] CreateMovieDto movieDto)
         {
-            Movies.Add(movie);
+            Movie movie = _mapper.Map<Movie>(movieDto);
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
             return CreatedAtAction(nameof(GetMovie), new { uid = movie.Id }, movie);
         }
     }
