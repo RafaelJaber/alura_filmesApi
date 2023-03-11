@@ -17,5 +17,6 @@ namespace FilmesApi.Models
         public string? LineTwo { get; set; }
         [Required(ErrorMessage = "Number is required")]
         public int Number { get; set; }
+        public virtual MovieTheater MovieTheater { get; set; }
     }
 }

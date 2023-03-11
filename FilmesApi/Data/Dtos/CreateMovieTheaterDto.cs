@@ -6,5 +6,6 @@ namespace FilmesApi.Data.Dtos
     {
         [Required(ErrorMessage = "Field name is required")]
         public string? Name { get; set; }
+        public Guid AddressUid { get; set; }
     }
 }

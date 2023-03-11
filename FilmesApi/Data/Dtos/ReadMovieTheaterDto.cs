@@ -5,5 +5,6 @@ namespace FilmesApi.Data.Dtos
         public Guid Uid { get; set; }
         public string? Name { get; set; }
         public DateTime AppointmentTime { get; set; } = DateTime.Now;
+        public ReadAddressDto AddressDto { get; set; }
     }
 }
