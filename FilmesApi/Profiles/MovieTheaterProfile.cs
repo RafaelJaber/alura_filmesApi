@@ -10,7 +10,9 @@ namespace FilmesApi.Profiles
     {
         public MovieTheaterProfile()
         {
-            CreateMap<MovieTheater, ReadMovieTheaterDto>();
+            CreateMap<MovieTheater, ReadMovieTheaterDto>()
+                .ForMember(dto => dto.AddressDto, opt => 
+                    opt.MapFrom(mTheater => mTheater.Address));
             CreateMap<CreateMovieTheaterDto, MovieTheater>();
             CreateMap<UpdateMovieTheaterDto, MovieTheater>();
             CreateMap<ReadMovieTheaterDto, MovieTheater>();

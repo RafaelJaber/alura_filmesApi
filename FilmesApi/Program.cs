@@ -11,7 +11,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Adicionando conexão com o banco
 string? connectionStringMovie = builder.Configuration.GetConnectionString("MovieConnection");
 builder.Services.AddDbContext<MovieContext>(opts => 
-    opts.UseMySql(connectionStringMovie, ServerVersion.AutoDetect(connectionStringMovie))
+    opts
+        .UseLazyLoadingProxies()
+        .UseMySql(connectionStringMovie, ServerVersion.AutoDetect(connectionStringMovie))
 );
 
 // Add services to the container.
