@@ -1,4 +1,6 @@
 using FilmesApi.Data;
+using FilmesApi.Repository;
+using FilmesApi.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<MovieContext>(opts =>
 
 // Add services to the container.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IMovieTheaterRepository, MovieTheaterRepository>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -9,5 +9,6 @@ namespace FilmesApi.Data
             : base(opts) {}
         
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieTheater> MovieTheaters { get; set; }
     }
 }
