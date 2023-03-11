@@ -10,7 +10,8 @@ namespace FilmesApi.Profiles
         {
             CreateMap<CreateSessionDto, Session>();
             CreateMap<UpdateSessionDto, Session>();
-            CreateMap<Session, ReadAddressDto>();
+            CreateMap<Session, ReadSessionDto>();
+            CreateMap<ReadSessionDto, Session>();
         }
     }
 }

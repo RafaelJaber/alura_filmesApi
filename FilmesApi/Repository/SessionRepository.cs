@@ -31,7 +31,7 @@ namespace FilmesApi.Repository
         public ReadSessionDto? FindById(Guid uid)
         {
             Session session = _context.Sessions
-                .FirstOrDefault(session => session.Guid == uid)!;
+                .FirstOrDefault(session => session.Uid == uid)!;
             if (session == null) return null;
             return _mapper.Map<ReadSessionDto>(session);
         }

@@ -8,6 +8,9 @@ namespace FilmesApi.Models
     {
         [Key]
         [Required]
-        public Guid Guid { get; set; } = Guid.NewGuid();
+        public Guid Uid { get; set; } = Guid.NewGuid();
+        [Required]
+        public Guid MovieId { get; set; }
+        public virtual Movie Movie { get; set; }
     }
 }

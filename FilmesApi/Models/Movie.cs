@@ -17,5 +17,6 @@ namespace FilmesApi.Models
         [Required(ErrorMessage = "Duration is Required")]
         [Range(0, 500, ErrorMessage = "Duration is invalid")]
         public int Duration { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }
