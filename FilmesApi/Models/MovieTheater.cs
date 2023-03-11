@@ -13,5 +13,6 @@ namespace FilmesApi.Models
         public string? Name { get; set; }
         public Guid AddressUid { get; set; }
         public virtual Address Address { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace FilmesApi.Controllers
         {
             return 
                 _mapper.Map<List<ReadMovieDto>>(
-                    _context.Movies.Skip(skip).Take(take)
+                    _context.Movies.Skip(skip).Take(take).ToList()
                     );
         }
 

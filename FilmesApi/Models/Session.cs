@@ -12,5 +12,8 @@ namespace FilmesApi.Models
         [Required]
         public Guid MovieId { get; set; }
         public virtual Movie Movie { get; set; }
+        [Required]
+        public Guid MovieTheaterId { get; set; }
+        public virtual MovieTheater MovieTheater { get; set; }
     }
 }
