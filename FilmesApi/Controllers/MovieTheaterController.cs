@@ -32,6 +32,12 @@ namespace FilmesApi.Controllers
         {
             return _repository.FindAll(skip, take);
         }
+
+        [HttpGet("{AddressUid:guid}")]
+        public IEnumerable<ReadMovieTheaterDto> FindByAdress(Guid addressUid)
+        {
+            return _repository.FindByByAddress(addressUid);
+        }
         
         /// <summary>
         /// Busca um cinema especifico atravez do GUID

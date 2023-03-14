@@ -3,6 +3,7 @@ using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using FilmesApi.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmesApi.Repository
 {
@@ -27,6 +28,14 @@ namespace FilmesApi.Repository
                     .Skip(skip)
                     .Take(take)
                 );
+        }
+
+        public IEnumerable<ReadMovieTheaterDto> FindByByAddress(Guid addressUid)
+        {
+            List<MovieTheater> movieTheaters = _context.MovieTheaters.FromSqlRaw(
+                $"SELECT Uid, Name, AddressUid FROM TB_MovieTheataers WHERE AddressUid = {addressUid}")
+                .ToList();
+            return _mapper.Map<List<ReadMovieTheaterDto>>(movieTheaters);
         }
 
         /// <inheritdoc />
