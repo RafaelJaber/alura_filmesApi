@@ -28,10 +28,13 @@ namespace FilmesApi.Repository
                 );
         }
 
-        public ReadSessionDto? FindById(Guid uid)
+        public ReadSessionDto? FindById(Guid movieUid, Guid movieTUid)
         {
             Session session = _context.Sessions
-                .FirstOrDefault(session => session.Uid == uid)!;
+                .FirstOrDefault( 
+                    session => 
+                        session.MovieId == movieUid && session.MovieTheaterId == movieTUid
+                )!;
             if (session == null) return null;
             return _mapper.Map<ReadSessionDto>(session);
         }

@@ -40,10 +40,10 @@ namespace FilmesApi.Controllers
         /// <param name="uid">UID referente a sessão</param>
         /// <returns>IActionResult</returns>
         /// <response code="200">Caso retorne com sucesso</response>
-        [HttpGet("{uid:guid}")]
-        public IActionResult FindById(Guid uid)
+        [HttpGet("{movieUid:guid}/{movieTUid:guid}")]
+        public IActionResult FindById(Guid movieUid, Guid movieTUid)
         {
-            ReadSessionDto? sessionDto = _repository.FindById(uid);
+            ReadSessionDto? sessionDto = _repository.FindById(movieUid,movieTUid);
             if (sessionDto == null) return NotFound();
             return Ok(sessionDto);
         }
@@ -59,7 +59,8 @@ namespace FilmesApi.Controllers
         public IActionResult Create([FromBody] CreateSessionDto dto)
         {
             ReadSessionDto sessionDto = _repository.Create(dto);
-            return CreatedAtAction(nameof(FindById), new { uid = sessionDto.Uid, sessionDto });
+            return CreatedAtAction(nameof(FindById), 
+                new { movieUid = dto.MovieId, movieTUid = dto.MovieTheaterId });
         }
     }
 }
