@@ -2,6 +2,7 @@ using AutoMapper;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using FilmesApi.Repository.IRepository;
+using FluentResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,9 +78,9 @@ namespace FilmesApi.Controllers
         [HttpPut("{uid:guid}")]
         public IActionResult UpdateMovie(Guid uid, [FromBody] UpdateMovieTheaterDto movieTheaterDto)
         {
-            bool state = _repository.Update(uid, movieTheaterDto);
-            if (state) return NoContent();
-            return NotFound();
+            Result state = _repository.Update(uid, movieTheaterDto);
+            if (state.IsFailed) return NotFound();
+            return NoContent();
         }
         
         /// <summary>
@@ -113,9 +114,9 @@ namespace FilmesApi.Controllers
         [HttpDelete("{uid:guid}")]
         public IActionResult DeleteMovie(Guid uid)
         {
-            bool state = _repository.Delete(uid);
-            if (state) return NoContent();
-            return BadRequest();
+            Result state = _repository.Delete(uid);
+            if (state.IsFailed) return BadRequest();
+            return NoContent();
         }
     }
 }

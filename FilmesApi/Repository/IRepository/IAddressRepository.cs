@@ -1,4 +1,5 @@
 using FilmesApi.Data.Dtos;
+using FluentResults;
 
 namespace FilmesApi.Repository.IRepository
 {
@@ -15,8 +16,8 @@ namespace FilmesApi.Repository.IRepository
         ReadAddressDto Create(CreateAddressDto dto);
 
         /// <inheritdoc cref="System.String.IndexOf(char)" />
-        bool Update(Guid uid, UpdateAddressDto dto);
+        Result Update(Guid uid, UpdateAddressDto dto);
         /// <inheritdoc cref="System.String.IndexOf(char)" />
-        bool Delete(Guid uid);
+        Result Delete(Guid uid);
     }
 }

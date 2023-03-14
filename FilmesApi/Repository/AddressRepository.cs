@@ -3,6 +3,7 @@ using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using FilmesApi.Repository.IRepository;
+using FluentResults;
 
 namespace FilmesApi.Repository
 {
@@ -53,25 +54,25 @@ namespace FilmesApi.Repository
         }
 
         /// <inheritdoc />
-        public bool Update(Guid uid, UpdateAddressDto dto)
+        public Result Update(Guid uid, UpdateAddressDto dto)
         {
             Address address = _context.Addresses
                 .FirstOrDefault(ad => ad.Uid == uid)!;
-            if (address == null) return false;
+            if (address == null) return Result.Fail("Endereço não encontrado");
             _mapper.Map(dto, address);
             _context.SaveChanges();
-            return true;
+            return Result.Ok();
         }
 
         /// <inheritdoc />
-        public bool Delete(Guid uid)
+        public Result Delete(Guid uid)
         {
             Address address = _context.Addresses
                 .FirstOrDefault(ad => ad.Uid == uid)!;
-            if (address == null) return false;
+            if (address == null) return Result.Fail("Endereço não encontrado");
             _context.Remove(address);
             _context.SaveChanges();
-            return true;
+            return Result.Ok();
         }
     }
 }

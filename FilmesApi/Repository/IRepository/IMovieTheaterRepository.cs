@@ -1,4 +1,5 @@
 using FilmesApi.Data.Dtos;
+using FluentResults;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace FilmesApi.Repository.IRepository
@@ -9,7 +10,7 @@ namespace FilmesApi.Repository.IRepository
         IEnumerable<ReadMovieTheaterDto> FindByByAddress(Guid addressUid);
         ReadMovieTheaterDto FindById(Guid uid);
         ReadMovieTheaterDto Create(CreateMovieTheaterDto dto);
-        bool Update(Guid uid, UpdateMovieTheaterDto dto);
-        bool Delete(Guid uid);
+        Result Update(Guid uid, UpdateMovieTheaterDto dto);
+        Result Delete(Guid uid);
     }
 }

@@ -3,6 +3,7 @@ using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using FilmesApi.Repository.IRepository;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmesApi.Repository
@@ -58,25 +59,25 @@ namespace FilmesApi.Repository
         }
 
         /// <inheritdoc />
-        public bool Update(Guid uid, UpdateMovieTheaterDto dto)
+        public Result Update(Guid uid, UpdateMovieTheaterDto dto)
         {
             MovieTheater movieTheater = _context.MovieTheaters
                 .FirstOrDefault(theater => theater.Uid == uid)!;
-            if (movieTheater == null) return false;
+            if (movieTheater == null) return Result.Fail("Filme não encontrado");
             _mapper.Map(dto, movieTheater);
             _context.SaveChanges();
-            return true;
+            return Result.Ok();
         }
 
         /// <inheritdoc />
-        public bool Delete(Guid uid)
+        public Result Delete(Guid uid)
         {
             MovieTheater movieTheater = _context.MovieTheaters
                 .FirstOrDefault(theater => theater.Uid == uid)!;
-            if (movieTheater == null) return false;
+            if (movieTheater == null) return Result.Fail("Filme não encontrado");
             _context.Remove(movieTheater);
             _context.SaveChanges();
-            return true;
+            return Result.Ok();
         }
     }
 }
