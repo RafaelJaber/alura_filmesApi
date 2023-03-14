@@ -22,7 +22,11 @@ namespace FilmesApi.Data
                 .HasOne(session => session.Movie)
                 .WithMany(movie => movie.Sessions)
                 .HasForeignKey(session => session.MovieId);
-            
+
+            builder.Entity<Address>()
+                .HasOne(address => address.MovieTheater)
+                .WithOne(movieT => movieT.Address)
+                .OnDelete(DeleteBehavior.Restrict);
         }
         
         public DbSet<Movie> Movies { get; set; }
