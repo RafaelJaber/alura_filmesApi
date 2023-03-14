@@ -1,4 +1,19 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using UserApi.Data;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+
+// Adiciona conexão com o banco
+string? connectionStringAuth= builder.Configuration.GetConnectionString("AuthConnection");
+builder.Services.AddDbContext<UserDbContext>(opts => 
+    opts
+        .UseMySql(connectionStringAuth, ServerVersion.AutoDetect(connectionStringAuth))
+);
+// Adiciona o identity
+builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<UserDbContext>();
 
 
 // Add services to the container.
