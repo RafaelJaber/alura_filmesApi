@@ -21,8 +21,8 @@ namespace UserApi.Controllers
         public IActionResult LoginUser(LoginRequest request)
         {
             Result result = _repository.LoginUser(request);
-            if (result.IsFailed) return Unauthorized();
-            return Ok();
+            if (result.IsFailed) return Unauthorized(result.Errors[0]);
+            return Ok(result.Successes[0]);
         }
     }
 }

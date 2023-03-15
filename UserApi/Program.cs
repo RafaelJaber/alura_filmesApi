@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using UserApi.Data;
 using UserApi.Repository;
 using UserApi.Repository.IRepository;
+using UserApi.Services;
+using UserApi.Services.IServices;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
