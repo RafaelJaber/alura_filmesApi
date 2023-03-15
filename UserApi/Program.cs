@@ -27,6 +27,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 // Add services to the container.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
