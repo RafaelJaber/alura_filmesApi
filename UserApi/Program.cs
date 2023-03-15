@@ -16,8 +16,10 @@ builder.Services.AddDbContext<UserDbContext>(opts =>
         .UseMySql(connectionStringAuth, ServerVersion.AutoDetect(connectionStringAuth))
 );
 // Adiciona o identity
-builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>()
-    .AddEntityFrameworkStores<UserDbContext>();
+builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(
+        opt => opt.SignIn.RequireConfirmedEmail = true)
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireNonAlphanumeric = true;

@@ -1,6 +1,7 @@
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Data.Dto;
+using UserApi.Data.Requests;
 using UserApi.Repository.IRepository;
 
 namespace UserApi.Controllers
@@ -18,11 +19,20 @@ namespace UserApi.Controllers
 
 
         [HttpPost]
-        public IActionResult RegisterUser(CreateUserDto createDto)
+        public async Task<IActionResult> RegisterUser(CreateUserDto createDto)
         {
-            Result result = _repository.RegisterUser(createDto);
-            if (result.IsFailed) return BadRequest(result.Errors);
-            return Ok();
+            Result result = await _repository.RegisterUser(createDto);
+            if (result.IsFailed) return BadRequest(result.Errors[0]);
+            return Ok(result.Successes[0]);
         }
+
+        [HttpPost("/active")]
+        public IActionResult ActiveUser(ActivateAccountRequest request)
+        {
+            Result result = _repository.ActivateAccountUser(request);
+            if (result.IsFailed) return StatusCode(500, result.Errors[0]);
+            return Ok(result.Successes);
+        }
+        
     }
 }

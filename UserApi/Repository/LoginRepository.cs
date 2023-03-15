@@ -32,7 +32,7 @@ namespace UserApi.Repository
                 Token token = _tokenService.CreateToken(identityUser);
                 return Result.Ok().WithSuccess(token.Value);
             }
-            return Result.Fail("Login falhou");
+            return Result.Fail(resultIdentity.Result.ToString());
         }
     }
 }
