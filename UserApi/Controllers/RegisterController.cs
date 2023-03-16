@@ -26,13 +26,13 @@ namespace UserApi.Controllers
             return Ok(result.Successes[0]);
         }
 
-        [HttpPost("/active")]
-        public IActionResult ActiveUser(ActivateAccountRequest request)
+        [HttpGet("/active")]
+        public IActionResult ActiveUser([FromQuery] ActivateAccountRequest request)
         {
             Result result = _repository.ActivateAccountUser(request);
             if (result.IsFailed) return StatusCode(500, result.Errors[0]);
             return Ok(result.Successes);
         }
-        
+
     }
 }
