@@ -8,6 +8,7 @@ using UserApi.Services.IServices;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddUserSecrets<Program>();
 
 // Adiciona conexão com o banco
 string? connectionStringAuth= builder.Configuration.GetConnectionString("AuthConnection");
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<UserDbContext>(opts =>
     opts
         .UseMySql(connectionStringAuth, ServerVersion.AutoDetect(connectionStringAuth))
 );
+
 // Adiciona o identity
 builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(
         opt => opt.SignIn.RequireConfirmedEmail = true)
