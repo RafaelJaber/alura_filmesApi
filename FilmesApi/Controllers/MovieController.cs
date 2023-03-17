@@ -2,6 +2,7 @@ using AutoMapper;
 using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +63,7 @@ namespace FilmesApi.Controllers
         /// <response code="201">Caso inserção seja feita com sucesso</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Roles = "admin")]
         public IActionResult AddMovie([FromBody] CreateMovieDto movieDto)
         {
             Movie movie = _mapper.Map<Movie>(movieDto);

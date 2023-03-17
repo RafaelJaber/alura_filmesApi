@@ -17,13 +17,15 @@ namespace UserApi.Repository
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser<Guid>> _userManager;
         private readonly IEmailService _emailService;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
-        public RegisterRepository(UserDbContext context, IMapper mapper, UserManager<IdentityUser<Guid>> userManager, IEmailService emailService)
+        public RegisterRepository(UserDbContext context, IMapper mapper, UserManager<IdentityUser<Guid>> userManager, IEmailService emailService, RoleManager<IdentityRole<Guid>> roleManager)
         {
             _context = context;
             _mapper = mapper;
             _userManager = userManager;
             _emailService = emailService;
+            _roleManager = roleManager;
         }
 
 
@@ -34,6 +36,11 @@ namespace UserApi.Repository
             Task<IdentityResult> resultIdentity = _userManager.CreateAsync(userIdentity, dto.Password);
             if (resultIdentity.Result.Succeeded)
             {
+                IdentityResult createRoleResult = _roleManager
+                    .CreateAsync(new IdentityRole<Guid>("admin")).Result;
+                IdentityResult userRoleResult = _userManager
+                    .AddToRoleAsync(userIdentity, "admin").Result;
+                
                 string code = await _userManager.GenerateEmailConfirmationTokenAsync(userIdentity);
                 string encodedCode = HttpUtility.UrlEncode(code);
                 _emailService.SendEmail(

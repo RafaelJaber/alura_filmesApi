@@ -10,12 +10,13 @@ namespace UserApi.Services
 {
     public class TokenService : ITokenService
     {
-        public Token CreateToken(IdentityUser<Guid> user)
+        public Token CreateToken(IdentityUser<Guid> user, string roleUser)
         {
             Claim[] userRights = new[]
             {
                 new Claim("username", user.UserName),
-                new Claim("id", user.Id.ToString())
+                new Claim("id", user.Id.ToString()),
+                new Claim(ClaimTypes.Role, roleUser)
             };
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(
